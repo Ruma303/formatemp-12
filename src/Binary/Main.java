@@ -15,19 +15,19 @@ public class Main {
 			}
 		};
 		Persona p2 = new Persona("Caio", 69);
-		Persona p3 = new NewPersona("Sempronio", 10);
+		Persona p3 = new NewPersona(new Persona("Sempronio", 26));
 
 		p1.bWrite();
 		p2.bWrite();
 		p3.bWrite();
 
-
+		System.out.println(p1); // Usa toString() specifico
+		System.out.println(p2); // Usa toString() di Object
+		System.out.println(p3); // Usa toString() di NewPersona
+		
 		// Legge il file binario
 		// bRead();
-		bReadOptimized();
-		System.out.println(p1); // Deve stampare toString() solo di NewPersona
-		System.out.println(p2); // Deve stampare toString() solo di NewPersona
-		System.out.println(p3); // Deve stampare toString() solo di NewPersona
+		// bReadOptimized();
 	}
 
 	// Leggere un file binario
@@ -38,7 +38,6 @@ public class Main {
 			fis = new FileInputStream("file.bin");
 			int data;
 			while ((data = fis.read()) != -1) {
-				// Stampa i byte letti come caratteri
 				System.out.print((char) data);
 			}
 		} catch (IOException e) {
@@ -62,7 +61,7 @@ public class Main {
 					Object obj = ois.readObject();
 					System.out.println(obj);
 				} catch (EOFException e) {
-					break; // Fine del file, interrompiamo la lettura
+					break;
 				} catch (ClassNotFoundException e) {
 					System.out.println("Errore: Classe non trovata.");
 				}
@@ -75,7 +74,7 @@ public class Main {
 
 // Classe Persona che implementa Serializable
 class Persona implements Serializable {
-	private static final long serialVersionUID = 1L; // Aggiunto per sicurezza nella serializzazione
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int age;
 
@@ -100,11 +99,6 @@ class Persona implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public String toString() {
-		return "Persona: " + name + ", Età: " + age;
-	}
 }
 
 // Classe NewPersona che estende Persona
@@ -114,8 +108,8 @@ class NewPersona extends Persona {
 		super(name, age);
 	}
 
-	public NewPersona() {
-		super("Default", 0); // Valori di default
+	public NewPersona(Persona p) {
+		this(p.getName(), p.getAge()); // Dati in arrivo da Persona
 	}
 
 	// Override di toString() solo per questa classe
