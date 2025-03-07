@@ -38,6 +38,7 @@ public class Main {
 		System.out.println("\n");
 		System.out.println("Tutti:");
         persone.forEach(System.out::println);
+        
         System.out.println("\n");
         System.out.println("\nMaggiorenni:");
         maggiorenni.forEach(System.out::println);
