@@ -1,0 +1,1 @@
+scarpe,abbigliamento,50.0,10
