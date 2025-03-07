@@ -1,6 +1,10 @@
 package Binary;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -8,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Persona p1 = new Persona("Tizio", 99) {
+		Persona p1 = new Persona("Tizio", 12) {
 			@Override
 			public String toString() {
 				return "Persona anonima: " + getName() + ", età: " + getAge();
@@ -16,6 +20,12 @@ public class Main {
 		};
 		Persona p2 = new Persona("Caio", 69);
 		Persona p3 = new NewPersona(new Persona("Sempronio", 26));
+		
+		ArrayList<Persona> persone = new ArrayList<Persona>(Arrays.asList(p1,p2,p3));
+		List<Persona> maggiorenni = persone
+				.stream()
+				.filter(p -> p.getAge() > 18)
+				.collect(Collectors.toList());
 
 		p1.bWrite();
 		p2.bWrite();
@@ -24,6 +34,13 @@ public class Main {
 		System.out.println(p1); // Usa toString() specifico
 		System.out.println(p2); // Usa toString() di Object
 		System.out.println(p3); // Usa toString() di NewPersona
+		
+		System.out.println("\n");
+		System.out.println("Tutti:");
+        persone.forEach(System.out::println);
+        System.out.println("\n");
+        System.out.println("\nMaggiorenni:");
+        maggiorenni.forEach(System.out::println);
 		
 		// Legge il file binario
 		// bRead();
